@@ -515,7 +515,7 @@ export default {
   mounted() {
     // 自动回血
     this.autoHealthRecovery = setInterval(() => {
-      this.$store.commit('set_player_curhp', this.healthRecoverySpeed * (this.attribute.MAXHP.value / 50))
+      this.$store.commit('set_player_curhp', this.healthRecoverySpeed * (this.attribute.MAXHP.value * 0.04))
     }, 1000)
 
 
@@ -951,6 +951,7 @@ export default {
     closeDungeonsInfo() {
       this.dungeons = ''
     },
+    // 开始挑战 button
     eventBegin() {
       var b = this.findComponentDownward(this, 'dungeons')
       b.dungeons = this.dungeons
@@ -958,6 +959,7 @@ export default {
       // this.dungeons = ''
       this.inDungeons = true
     },
+    // 挑战结束 button
     eventEnd() {
       this.inDungeons = false;
       this.dungeons = ''

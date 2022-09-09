@@ -195,6 +195,7 @@ export default {
           this.$store.commit("set_endless_lv", this.$store.state.playerAttribute.endlessLv + 1);
           this.$store.commit("set_player_curhp", 'full');
         } else {
+          // 副本每次结束的时候
           this.$store.commit("set_sys_info", {
             msg: `
                 副本探索成功！
@@ -446,7 +447,7 @@ export default {
         })
       } else {
         //金币获取倍率
-        var goldObtainRatio = 1
+        var goldObtainRatio = 1.25
         if (this.dungeons.type == 'endless') {
           var endlessLv = this.$store.state.playerAttribute.endlessLv
           goldObtainRatio = 2.6
@@ -460,6 +461,10 @@ export default {
         });
         this.$store.commit("set_player_gold", parseInt(event.trophy.gold * goldObtainRatio));
       }
+
+    },
+    // 低保，保证没10次给一次最好的装备
+    basicEquip(){
 
     }
   }

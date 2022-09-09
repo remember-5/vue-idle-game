@@ -88,7 +88,7 @@ export default {
     return {
       equiment: {},
       strengTime: '', //刷新副本计时器
-      strengTimeO: 60, //刷新副本时间间隔 单位：S
+      strengTimeO: 10, //刷新副本时间间隔 单位：S
       autoStrengModel: false,
       autoStrengLv: 12,
       autoStrengTime: '',
@@ -162,7 +162,7 @@ export default {
       if (this.strengTime&&this.equiment.enchantlvl>=12) {
         this.$store.commit("set_sys_info", {
           msg: `
-          刷新页面时需要等待60S才能强化+12以上，仍需等待${this.strengTimeO}秒。
+          刷新页面时需要等待10S才能强化+12以上，仍需等待${this.strengTimeO}秒。
         `,
           type: 'wrning'
         });
@@ -204,7 +204,9 @@ export default {
         lv++
       } else {
         // 强化失败
-        if (lv >= 5) {
+        if(lv >= 12){
+          lv = 0
+        } else if (lv >= 5 && lv < 12) {
           lv = lv - 1
         }
       }

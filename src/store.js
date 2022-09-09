@@ -124,6 +124,7 @@ var initial_weapon = {
 export default new Vuex.Store({
   state: {
     noneSSCount:1,
+    shopNoneSSCount:1,
     needStrengthenEquipment: {}, //设定当前需要强化的装备
     sysInfo: [{
       type: '',
@@ -437,6 +438,10 @@ export default new Vuex.Store({
     },
       set_noneSSCount(state, data) {
           this.state.noneSSCount = data;
+      },
+      set_shopNoneSSCount(state, data) {
+          this.state.shopNoneSSCount = data;
       }
+
   },
 })

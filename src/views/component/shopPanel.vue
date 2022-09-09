@@ -208,9 +208,20 @@ export default {
       ) {
         // 获得独特装备
         equipQua = 4;
+        this.$store.commit('set_shopNoneSSCount', 1)
       } else {
         // 未获得装备
       }
+      let shopNoneSSCount = this.$store.state.shopNoneSSCount
+      console.log(shopNoneSSCount)
+      if (shopNoneSSCount >= 50) {
+        equipQua = 4;
+        this.$store.commit('set_shopNoneSSCount', 1)
+      }else{
+        shopNoneSSCount+=1
+        this.$store.commit('set_shopNoneSSCount', shopNoneSSCount)
+      }
+
       if (equipQua != -1) {
         // this.createEquip(equipQua,lv)
         var index = Math.floor(Math.random() * 4);

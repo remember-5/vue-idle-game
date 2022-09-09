@@ -214,7 +214,7 @@ export default {
       }
       let shopNoneSSCount = this.$store.state.shopNoneSSCount
       console.log(shopNoneSSCount)
-      if (shopNoneSSCount >= 50) {
+      if (shopNoneSSCount >= 5 * 10) {
         equipQua = 4;
         this.$store.commit('set_shopNoneSSCount', 1)
       }else{

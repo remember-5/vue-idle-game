@@ -424,9 +424,9 @@
         </div>
       </div>
     </div>
-    <extras></extras>
-    <qa></qa>
-    <setting></setting>
+    <extras v-if="!isMobile"></extras>
+    <qa v-if="!isMobile"></qa>
+    <setting v-if="!isMobile"></setting>
   </div>
 </template>
 <script>
@@ -451,6 +451,7 @@ export default {
   mixins: [assist],
   data() {
     return {
+      isMobile: false,
       GMmodel: false,
       time: '00:00:00',
       sysInfo: {},
@@ -518,7 +519,6 @@ export default {
       this.$store.commit('set_player_curhp', this.healthRecoverySpeed * (this.attribute.MAXHP.value * 0.04))
     }, 1000)
 
-
     // 自动保存
     setInterval(() => {
       this.saveGame()
@@ -541,6 +541,8 @@ export default {
     this.loadGame(sd)
     //生成随机副本
     this.createdDungeons()
+
+    this.isMobile = this._isMobile()
 
     // 监听快捷键
     document.onkeydown = (e)=> {
@@ -1093,7 +1095,12 @@ export default {
             `,
         type: 'win'
       });
+    },
+    _isMobile() {
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      return flag;
     }
+
   }
 };
 

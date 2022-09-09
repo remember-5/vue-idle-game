@@ -345,9 +345,9 @@ export default {
       // 获取独特装备
       if (event.type == 'boss' && this.dungeons.type != 'endless') {
         // 低保，保证没10次给一次最好的装备
+        const _count = 15;
         let noneSSCount = this.$store.state.noneSSCount
-        console.log(noneSSCount)
-        if (noneSSCount >= 15){
+        if (noneSSCount >= _count){
           var random = Math.random()
           if (random <= 0.3 && random > 0) {
             var b = this.findBrothersComponents(this, 'weaponPanel', false)[0]
@@ -369,6 +369,10 @@ export default {
           this.$store.commit('set_noneSSCount', 1)
         }else{
           noneSSCount+=1
+          this.$mymessage({
+            message: `再挑战${_count - noneSSCount}次，必出神话！` ,
+            center: true
+          });
           this.$store.commit('set_noneSSCount', noneSSCount)
           var randow = 1 - 0.02*((this.dungeons.difficulty-1)*2+1)
           if (Math.random() > randow) {

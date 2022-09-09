@@ -212,9 +212,9 @@ export default {
       } else {
         // 未获得装备
       }
+      const _count = 10;
       let shopNoneSSCount = this.$store.state.shopNoneSSCount
-      console.log(shopNoneSSCount)
-      if (shopNoneSSCount >= 5 * 10) {
+      if (shopNoneSSCount >= 5 * _count) {
         equipQua = 4;
         this.$store.commit('set_shopNoneSSCount', 1)
       }else{

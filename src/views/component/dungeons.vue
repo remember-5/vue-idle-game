@@ -14,6 +14,7 @@
 </template>
 <script>
 import { assist } from '../../assets/js/assist';
+import debug from "debug";
 export default {
   name: "dungeons",
   mixins: [assist],
@@ -340,10 +341,13 @@ export default {
     caculateTrophy(event) {
       var items = []
       var lv = this.dungeons.lv
+
       // 获取独特装备
       if (event.type == 'boss' && this.dungeons.type != 'endless') {
-        var randow = 1 - 0.02*((this.dungeons.difficulty-1)*2+1)
-        if (Math.random() > randow) {
+        // 低保，保证没10次给一次最好的装备
+        let noneSSCount = this.$store.state.noneSSCount
+        console.log(noneSSCount)
+        if (noneSSCount >= 15){
           var random = Math.random()
           if (random <= 0.3 && random > 0) {
             var b = this.findBrothersComponents(this, 'weaponPanel', false)[0]
@@ -362,7 +366,32 @@ export default {
             var item = b.createNewItem(4, parseInt(lv + Math.random() * 6))
             items.push(JSON.parse(item))
           }
-
+          this.$store.commit('set_noneSSCount', 1)
+        }else{
+          noneSSCount+=1
+          this.$store.commit('set_noneSSCount', noneSSCount)
+          var randow = 1 - 0.02*((this.dungeons.difficulty-1)*2+1)
+          if (Math.random() > randow) {
+            this.$store.commit('set_noneSSCount', 1)
+            var random = Math.random()
+            if (random <= 0.3 && random > 0) {
+              var b = this.findBrothersComponents(this, 'weaponPanel', false)[0]
+              var item = b.createNewItem(4, parseInt(lv + Math.random() * 6))
+              items.push(JSON.parse(item))
+            } else if (random <= 0.5 && random > 0.3) {
+              var b = this.findBrothersComponents(this, 'armorPanel', false)[0]
+              var item = b.createNewItem(4, parseInt(lv + Math.random() * 6))
+              items.push(JSON.parse(item))
+            }else if (random <= 0.75 && random > 0.5) {
+              var b = this.findBrothersComponents(this, 'ringPanel', false)[0]
+              var item = b.createNewItem(4, parseInt(lv + Math.random() * 6))
+              items.push(JSON.parse(item))
+            } else {
+              var b = this.findBrothersComponents(this, 'neckPanel', false)[0]
+              var item = b.createNewItem(4, parseInt(lv + Math.random() * 6))
+              items.push(JSON.parse(item))
+            }
+          }
         }
       }
       var trophy = event.trophy
@@ -461,12 +490,7 @@ export default {
         });
         this.$store.commit("set_player_gold", parseInt(event.trophy.gold * goldObtainRatio));
       }
-
     },
-    // 低保，保证没10次给一次最好的装备
-    basicEquip(){
-
-    }
   }
 };
 

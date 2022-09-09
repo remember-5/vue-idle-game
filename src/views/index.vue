@@ -505,10 +505,11 @@ export default {
     };
     this.initial()
 
+    // todo 后台可以自动刷金币
     // 监听当前窗口是否处于后台状态
-    document.addEventListener("visibilitychange", e => {
-      this.windowVisibilitychange()
-    });
+    // document.addEventListener("visibilitychange", e => {
+    //   this.windowVisibilitychange()
+    // });
 
   },
   mounted() {
@@ -540,6 +541,22 @@ export default {
     this.loadGame(sd)
     //生成随机副本
     this.createdDungeons()
+
+    // 监听快捷键
+    document.onkeydown = (e)=> {
+      // 打开背包 i
+      if (e.keyCode == 73) {
+        this.backpackPanelOpened = !this.backpackPanelOpened
+      }
+      // 刷新地图 n
+      if (e.keyCode == 78) {
+        this.createdDungeons()
+      }
+      // 商店 b
+      if (e.keyCode == 66) {
+        this.shopPanelOpened = !this.shopPanelOpened
+      }
+    }
   },
   computed: {
     attribute() { return this.$store.state.playerAttribute.attribute },

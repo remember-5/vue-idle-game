@@ -369,10 +369,6 @@ export default {
           this.$store.commit('set_noneSSCount', 1)
         }else{
           noneSSCount+=1
-          this.$mymessage({
-            message: `再挑战${_count - noneSSCount}次，必出神话！` ,
-            center: true
-          });
           this.$store.commit('set_noneSSCount', noneSSCount)
           var randow = 1 - 0.02*((this.dungeons.difficulty-1)*2+1)
           if (Math.random() > randow) {
